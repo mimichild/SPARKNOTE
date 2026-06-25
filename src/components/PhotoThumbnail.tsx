@@ -8,23 +8,36 @@ interface Props {
 }
 
 export default function PhotoThumbnail({ uri, size = 52 }: Props) {
-  const style = { width: size, height: size, borderRadius: 10 };
   if (uri) {
-    return <Image source={{ uri }} style={style} resizeMode="cover" />;
+    return (
+      <View style={[styles.photoBox, { width: size, height: size * (4 / 3) }]}>
+        <Image source={{ uri }} style={styles.photo} resizeMode="contain" />
+      </View>
+    );
   }
   return (
-    <View style={[style, styles.placeholder]}>
+    <View style={[styles.placeholder, { width: size, height: size }]}>
       <CameraIcon color="#cbd5e1" size={size * 0.4} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  photoBox: {
+    borderRadius: 10,
+    backgroundColor: '#ffffff',
+    overflow: 'hidden',
+  },
+  photo: {
+    width: '100%',
+    height: '100%',
+  },
   placeholder: {
     backgroundColor: '#f1f5f9',
     borderWidth: 1.5,
     borderColor: '#cbd5e1',
     borderStyle: 'dashed',
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },

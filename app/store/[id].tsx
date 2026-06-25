@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import {
-  View, Text, ScrollView, TouchableOpacity,
+  View, Text, Image, ScrollView, TouchableOpacity,
   Linking, StyleSheet, Dimensions, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,7 +9,6 @@ import type { Store, Category } from '@/types';
 import { getStoreById, deleteStore } from '@/db/storeRepository';
 import { getAllCategories } from '@/db/categoryRepository';
 import HeartRating from '@/components/HeartRating';
-import PhotoThumbnail from '@/components/PhotoThumbnail';
 import { useSettingsStore } from '@/store/settingsStore';
 
 const { width } = Dimensions.get('window');
@@ -55,16 +54,17 @@ export default function StoreDetailScreen() {
       </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-        {store.photos.length > 0 ? (
-          <ScrollView horizontal pagingEnabled style={{ height: 220 }}>
+        {store.photos.length > 0 && (
+          <ScrollView horizontal pagingEnabled style={{ height: width * (4 / 3) }}>
             {store.photos.map((uri, i) => (
-              <PhotoThumbnail key={i} uri={uri} size={width} />
+              <Image
+                key={i}
+                source={{ uri }}
+                style={{ width, height: width * (4 / 3), backgroundColor: '#ffffff' }}
+                resizeMode="contain"
+              />
             ))}
           </ScrollView>
-        ) : (
-          <View style={styles.noPhoto}>
-            <Text style={{ color: '#94a3b8', fontSize: 14 }}>沒有照片</Text>
-          </View>
         )}
 
         <View style={styles.body}>
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
   back: { color: '#475569', fontSize: 16 },
   edit: { fontSize: 16, fontWeight: '600' },
   delete: { fontSize: 16, fontWeight: '600', color: '#ef4444' },
-  noPhoto: { height: 160, alignItems: 'center', justifyContent: 'center', backgroundColor: '#f1f5f9' },
   body: { padding: 20 },
   name: { color: '#0f172a', fontSize: 22, fontWeight: '700', marginBottom: 8 },
   meta: { color: '#64748b', fontSize: 14, marginTop: 8 },
