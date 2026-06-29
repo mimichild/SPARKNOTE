@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-
-const HOME_BACKGROUND = '#EF999A';
+import { useSettingsStore } from '@/store/settingsStore';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const themeColor = useSettingsStore((s) => s.themeColor);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: themeColor }]}>
       <Text style={styles.title}>SPARK NOTE</Text>
 
       <View style={styles.bottom}>
@@ -21,7 +21,7 @@ export default function HomeScreen() {
           style={styles.startBtn}
           onPress={() => router.push('/main/records')}
         >
-          <Text style={styles.startBtnText}>開始使用</Text>
+          <Text style={[styles.startBtnText, { color: themeColor }]}>開始使用</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -29,7 +29,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: HOME_BACKGROUND, justifyContent: 'space-between' },
+  container: { flex: 1, justifyContent: 'space-between' },
   title: {
     color: '#ffffff',
     fontSize: 34,
@@ -55,5 +55,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     alignItems: 'center',
   },
-  startBtnText: { color: HOME_BACKGROUND, fontSize: 17, fontWeight: '700' },
+  startBtnText: { fontSize: 17, fontWeight: '700' },
 });
