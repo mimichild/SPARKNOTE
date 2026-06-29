@@ -11,7 +11,8 @@ export default function MainTabsLayout() {
         tabBarStyle: { backgroundColor: '#ffffff', borderTopColor: '#e5e7eb' },
         tabBarActiveTintColor: themeColor,
         tabBarInactiveTintColor: '#94a3b8',
-        tabBarLabelStyle: { fontSize: 17, fontWeight: '700', marginBottom: 8 },
+        tabBarItemStyle: { justifyContent: 'center' },
+        tabBarLabelStyle: { fontSize: 17, fontWeight: '700' },
         tabBarIcon: () => null,
       }}
     >
